@@ -165,17 +165,17 @@ class Purchase:
 
     prompt_init = staticmethod(prompt_init)
 
-
+#In this class i changed attribute rent, for the further better usage
 class Rental:
     """
     Instead of buying property user can rent it
     """
 
     def __init__(self, furnished='', utilities='',
-                 rent='', **kwargs):
+                 price='', **kwargs):
         super().__init__(**kwargs)
         self.furnished = furnished
-        self.rent = rent
+        self.price = price
         self.utilities = utilities
 
     def display(self):
@@ -185,7 +185,7 @@ class Rental:
         """
         super().display()
         print("RENTAL DETAILS")
-        print('rent: {}'.format(self.rent))
+        print('rent: {}'.format(self.price))
         print("estimated utilities: {}".format(
             self.utilities))
         print("furnished: {}".format(self.furnished))
@@ -195,7 +195,7 @@ class Rental:
         Additional information about property rental to object of class Property
         """
         return dict(
-            rent=input("What is the monthly rent? "),
+            price=input("What is the monthly price for rent? "),
             utilities=input(
                 "What are the estimated utilities? "),
             furnished=get_valid_input("Is the property furnished? ",
@@ -301,3 +301,10 @@ class Agent:
             return -1
         self.property_list.remove(available_properties[option])
         print('Congrats you bought your property!')
+
+    def reset_property_list(self):
+        '''
+        Just resets class variable
+        :return:
+        '''
+        self.property_list = []
