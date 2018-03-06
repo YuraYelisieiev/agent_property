@@ -14,6 +14,7 @@ def get_valid_input(input_string, valid_optoins):
 class Property:
     '''
     This the most main class for initializing and further work with property
+    There are 2 option of property to choose Apartment or House
     '''
     def __init__(self, square_feet='', beds='',
                  baths='', **kwargs):
@@ -136,12 +137,19 @@ class House(Property):
 
 
 class Purchase:
+    """
+    Giving information about price of a purchase and taxes
+    """
     def __init__(self, price='', taxes='', **kwargs):
         super().__init__(**kwargs)
         self.price = price
         self.taxes = taxes
 
     def display(self):
+        """
+        Printing all information about property, it price and taxes
+        :return:
+        """
         super().display()
         print(" PURCHASE DETAILS")
         print("selling price: {}".format(self.price))
@@ -156,6 +164,9 @@ class Purchase:
 
 
 class Rental:
+    """
+    Instead of buying property user can rent it
+    """
     def __init__(self, furnished='', utilities='',
                  rent='', **kwargs):
         super().__init__(**kwargs)
@@ -164,6 +175,10 @@ class Rental:
         self.utilities = utilities
 
     def display(self):
+        """
+        Giving full information about
+        :return:
+        """
         super().display()
         print("RENTAL DETAILS")
         print('rent: {}'.format(self.rent))
@@ -172,6 +187,9 @@ class Rental:
         print("furnished: {}".format(self.furnished))
 
     def prompt_init():
+        """
+        Additional information about property rental to object of class Property
+        """
         return dict(
             rent=input("What is the monthly rent? "),
             utilities=input(
@@ -219,10 +237,17 @@ class HousePurchase(Purchase, House):
 
 
 class Agent:
+    """
+    Through agent class you can add property to property list ofr the further use
+    """
     def __init__(self):
         self.property_list = []
 
     def display_properties(self):
+        """
+        printing all properties for the user
+        :return:
+        """
         for property in self.property_list:
             property.display()
 
@@ -234,6 +259,10 @@ class Agent:
     }
 
     def add_property(self):
+        """
+        This module add 1 more object of property to list.
+        :return:
+        """
         property_type = get_valid_input(
             "What type of property? ",
             ("house", "apartment")).lower()
