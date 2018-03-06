@@ -16,6 +16,7 @@ class Property:
     This the most main class for initializing and further work with property
     There are 2 option of property to choose Apartment or House
     '''
+
     def __init__(self, square_feet='', beds='',
                  baths='', **kwargs):
         super().__init__(**kwargs)
@@ -43,7 +44,7 @@ class Property:
                     beds=input("Enter a number of bedrooms: "),
                     baths=input("Enter number of baths: "))
 
-#Converting this method to static
+    # Converting this method to static
     prompt_init = staticmethod(prompt_init)
 
 
@@ -53,7 +54,8 @@ class Apartment(Property):
     """
     valid_laundries = ('coin', 'ensuite', 'none')
     valid_balconies = ('yes', 'no', 'solarium')
-    #adding additional parameters to the property
+
+    # adding additional parameters to the property
 
     def __init__(self, balcony='', laundry='', **kwargs):
         super().__init__(**kwargs)
@@ -65,7 +67,7 @@ class Apartment(Property):
         Print information about Apartment, but first print info about property
         :return:
         """
-        super().display() #causes parent display method and then display method of this class
+        super().display()  # causes parent display method and then display method of this class
         print("APARTMENT DETAILS")
         print('laundry: %s' % self.laundry)
         print('has balcony : %s' % self.balcony)
@@ -74,7 +76,7 @@ class Apartment(Property):
         '''
         Inputing and adding additional inofrmation to parent_init(dict
         '''
-        parent_init = Property.prompt_init() # here we calling parent class init method
+        parent_init = Property.prompt_init()  # here we calling parent class init method
         laundry = get_valid_input("What laundry facilitirs does"
                                   "the property have? ",
                                   Apartment.valid_laundries)
@@ -140,6 +142,7 @@ class Purchase:
     """
     Giving information about price of a purchase and taxes
     """
+
     def __init__(self, price='', taxes='', **kwargs):
         super().__init__(**kwargs)
         self.price = price
@@ -167,6 +170,7 @@ class Rental:
     """
     Instead of buying property user can rent it
     """
+
     def __init__(self, furnished='', utilities='',
                  rent='', **kwargs):
         super().__init__(**kwargs)
@@ -200,6 +204,8 @@ class Rental:
     prompt_init = staticmethod(prompt_init)
 
 
+# Next classes are for the different types prompt
+# You can rent a house, or purchase an apartment etc.
 class HouseRental(Rental, House):
     def prompt_init():
         init = House.prompt_init()
@@ -240,6 +246,7 @@ class Agent:
     """
     Through agent class you can add property to property list ofr the further use
     """
+
     def __init__(self):
         self.property_list = []
 
@@ -274,3 +281,23 @@ class Agent:
             (property_type, payment_type)]
         init_args = PropertyClass.prompt_init()
         self.property_list.append(PropertyClass(**init_args))
+
+    def buy_property(self):
+        """
+        This method creates list of property which are available for a customer with defined amount of money.
+        And gives oportunity
+        :return:
+        """
+        money = float(input('Enter your maximum funds'))
+        available_properties = list(
+            filter(lambda x: int(x.price) <= money, self.property_list))
+        for property in available_properties:
+            property.display()
+        option = input(
+            'Choose number of option in the list, or press Enter: ')
+        if option:
+            option = int(option) - 1
+        else:
+            return -1
+        self.property_list.remove(available_properties[option])
+        print('Congrats you bought your property!')
